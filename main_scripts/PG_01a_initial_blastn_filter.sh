@@ -25,7 +25,7 @@ genomes=${wd}/ctrl_files/list_genomes.txt
 results=${wd}/results_01_initial_blastn_filter
 
 #### Scripts
-loop=${wd}/nested_scripts/PG_01a_blastn_loop.sh
+loop=${wd}/nested_scripts/PG_01b_blastn_loop.sh
 
 #### Step 1: generate a file containing CDS from all genomes in input_files_tab
 # add identifier to fasta sequences and copy to a new file in blast directory
