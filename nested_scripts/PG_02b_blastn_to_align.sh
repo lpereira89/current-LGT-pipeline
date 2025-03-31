@@ -11,7 +11,7 @@
 #	Last updated:	15/02/2021, LPG
 #####################################################################################
 
-source /usr/local/extras/Genomics/.bashrc
+module load Anaconda3/2022.05
 
 #### Directories and input files
 # Genome is defined by script PG_02a_call_blast_to_align.sh - sed function substitutes XXXX by each genome ID
@@ -47,6 +47,7 @@ ls > ../query.txt
 #### Step 3: blastn each query sequence against all the blastDBs
 # outputting sequence id, the length of alignment, and aligned part of the subject sequence.
 mkdir ../Blastn_results
+source activate blast
 cat ${BlastDB} | while read line ; do mkdir ../Blastn_results/"$line" ; done
 cat ../query.txt | while read line ; do cat ${BlastDB} | while read line2 ; \
     do blastn -query "$line" -db ${BlastDB_location}/"$line2" -outfmt '6 sseqid length sseq' \
@@ -65,8 +66,8 @@ ls ../Blastn_over_${min_blast_aln_length} | while read line ; do grep ">" ../Bla
     | sort | uniq | wc -l | sed 's/^/'$line'\t/g' >> ../blastn_matches_per_gene.txt ; done
 
 #### Step 6: align the blastn fragments to the original gene sequence using MAFFT & unwrap alingment
-source /usr/local/extras/Genomics/apps/anaconda_python/etc/profile.d/conda.sh
-conda activate mafft
+conda activate mafft 
+# --addfragments argument doesn't work in all mafft versions, newest gave me problems (currently using version 7.453)
 mkdir ../ALN1-mafft
 unset MAFFT_BINARIES
 cat ../query.txt  | while read line ; do mafft --addfragments ../Blastn_over_${min_blast_aln_length}/"$line" "$line" > ../ALN1-mafft/"$line" ; done
@@ -89,6 +90,7 @@ cat ../query.txt | while read line ; do grep ">" ../ALN1-mafft/"$line" | cut -f 
 
 #### Step 9: generate a single consensus sequence for blastn matches represented by more than one sequence
 mkdir ../ALN4-consensus
+module load BioPerl/1.7.8-GCCcore-12.2.0
 ls ../ALN3-duplicated | while read line ; do perl ${consensus} -in ../ALN3-duplicated/"$line"  -out ../ALN4-consensus/"$line" -iupac ; done
 ls ../ALN4-consensus  | while read line ; do sed -i '/>/c\>'$line'' ../ALN4-consensus/"$line" ; done
 cat ../query.txt | while read line ; do sed -i 's/>'$line'_/>/g' ../ALN4-consensus/"$line"_*  ; done
