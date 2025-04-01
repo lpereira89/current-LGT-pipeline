@@ -29,15 +29,6 @@ scriptname=PG_04_initial_trees.sh
 sms=/shared/dunning_lab/Shared/programs/sms-1.8.1/./sms.sh
 fasta_to_phylip=${wd}/nested_scripts/Fasta2Phylip.pl
 
-#### Parameters
-rmname='evm.model'
-
-#### Step 1: remove irrelevant information from seq ID and conflicting characters
-# the portion to be removed has to be adjusted - in grasses, current genome database, this parameter works
-sed -i 's/${rmname}//g' ${fasta_dir}/*
-sed -i 's/:/_/g' ${fasta_dir}/*
-sed -i 's/\//_/g' ${fasta_dir}/*
-
 #### Step 2: create directories and convert fasta to phylip
 head -$i ${fasta_list} | tail -1 | while read line ; do mkdir -p ${outdir}/individual/"$line" ; mkdir -p ${outdir}/combined ; mkdir -p ${outdir}/logs ;  cd ${outdir}/individual/"$line" ; perl ${fasta_to_phylip} ${fasta_dir}/"$line" "$line" ; done
 
