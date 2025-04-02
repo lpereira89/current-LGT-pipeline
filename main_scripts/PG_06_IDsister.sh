@@ -14,7 +14,7 @@ source /usr/local/extras/Genomics/.bashrc
 #### Directories and input files
 wd=/mnt/fastdata/bo1lpg/pangenome-pipeline
 mid_trees=${wd}/results_05_rooted_trees
-species_list=${wd}/ctrl_files/list_species
+species_list=${wd}/ctrl_files/species_list
 
 #### Scripts
 idsis=${wd}/nested_scripts/id_sister.pl
@@ -27,6 +27,8 @@ target_group="andropogoneae"
 # perl id_sister.pl folder_name species_list_name
 # the name of the file and the name of the target sequence have to be identical
 # the name has to be 'Genus_species_geneID'
+mkdir ${wd}/results_06_IDsister
+cd ${wd}/results_06_IDsister
 perl ${idsis} ${mid_trees} ${species_list}
 
 #### step 2: filter results based on sister1 and sister2 relationships (i.e. they need to be the same)
