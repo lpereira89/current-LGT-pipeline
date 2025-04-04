@@ -19,7 +19,7 @@ BlastDB=${wd}/ctrl_files/BlastDBs_n67.txt
 BlastDB_location=${wd}/BlastDB-separate
 query_dir=${wd}/results_01_initial_blastn_filter
 CDS=${wd}/CDS
-good_aln=${wd}/results_04_initial_trees/less_than_200seqs/trees_samesister_min50bootstrap.txt
+good_aln=${wd}/results_06_IDsister/trees_samesister_min50bootstrap.txt
 
 #### Scripts
 consensus=${wd}/nested_scripts/consensus.pl
