@@ -32,7 +32,7 @@ cd ${wd}/results_06_IDsister
 perl ${idsis} ${mid_trees} ${species_list}
 
 #### step 2: filter results based on sister1 and sister2 relationships (i.e. they need to be the same)
-cat results_sister | awk '$5 == $8' | grep -v "mixed" | grep -v ${target_group} | cut -f 1 > trees_samesister.txt
+cat results_sister | awk '$5 == $7' | grep -v "mixed" | grep -v ${target_group} | cut -f 1 > trees_samesister.txt
 cat trees_samesister.txt | while read line; do grep "$line" results_sister >> results_sister_samesister ; done
 mkdir midpoint_root_samesister
 cat trees_samesister.txt | while read line ; do cp ${mid_trees}/"$line"* midpoint_root_samesister ; done
