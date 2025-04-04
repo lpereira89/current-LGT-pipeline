@@ -57,11 +57,9 @@ mkdir results_07_blastn_to_aln
 cd results_07_blastn_to_aln
 mkdir query
 cd query
-## !!! OLD CODE - following line should work but double check - 
-## cat ${CDS}/* > to_fish
-cat ${ctrl_files}/list_genomes.txt | while read line ; do cp ${CDS}/${line}/${line}_final.cds.fa > to_fish; done
+cat ${CDS}/*/*_final.cds.fa > to_fish
 cat ${good_aln} | while read line ; do grep "$line" -A 1 to_fish > "$line" ; done
-rm to_fish gene
+rm to_fish
 ls > ../query.txt
 
 #### Step 5: blastn each query sequence against all the blastDBs outputting sequence id, the length of alignment, and aligned part of the subject sequence.
