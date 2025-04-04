@@ -15,7 +15,7 @@ source /usr/local/extras/Genomics/.bashrc
 
 #### Directories and input files
 wd=/mnt/fastdata/bo1lpg/pangenome-pipeline
-BlastDB=${wd}/ctrl_files/BlastDBs_n67.txt
+BlastDB_genome=${wd}/ctrl_files/BlastDBs_n67.txt
 BlastDB_location=${wd}/BlastDB-separate
 query_dir=${wd}/results_01_initial_blastn_filter
 CDS=${wd}/CDS
@@ -45,7 +45,7 @@ cat ${BlastDB_PG} | while read line ; do makeblastdb -in "$line" -dbtype nucl ; 
 # Adjust if more databases need to be included
 blastdb_trans=${wd}/ctrl_files/blastDBS_extra_transcriptomes.txt
 blastdb_trans_dir=/shared/christin_lab1/shared/Luke/BLASTDBs/BLAST
-cat ${blastdb_trans} | while read line ; do cp ${blastdb_trans_dir}/"$line"* . ; done
+cat ${blastdb_trans} | while read line ; do cp ${blastdb_trans_dir}/"$line"* ${BlastDB_location} ; done
 
 #### Step 3: list of all databases
 cat ${BlastDB_genome} ${BlastDB_PG} ${blastdb_trans} > ${wd}/ctrl_files/BlastDBs_ALL.txt
