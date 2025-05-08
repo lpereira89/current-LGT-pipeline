@@ -34,7 +34,7 @@ mkdir -p 10_species_or_more/more_than_200seqs
 #### step 2: copy and clean alignments. Remove irrelevant information from seq ID and conflicting characters
 # !!! sms fails to construct the tree if seq names are too long - first step to clean names
 # the portion to be removed has to be adjusted - in grasses, current genome database, this parameter works
-cp ${input}/*/Fasta_mafft_alignments/* .
+find "${input}" -type f -path "*/Fasta_mafft_alignments/*" | xargs -I{} cp {} .
 
 ls | grep ${ID} | while read file; do sed -i "s/${rmname}//g" ${file}; done
 ls | grep ${ID} | while read file; do sed -i "s/:/_/g" ${file}; done
