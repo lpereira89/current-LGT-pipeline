@@ -37,7 +37,7 @@ BlastDB_PG=${wd}/ctrl_files/BlastDBs_PG.txt
 cat ${BlastDB_PG} | while read line ; do cp ${CDS}/${line}/${line}_final.cds.fa ${BlastDB_location} ; done
 cd ${BlastDB_location}
 # Add DB_ at the beggining of all CDS to be able to differentiate from the original query
-cat ${BlastDB_PG} | while read line ; do sed -i "s/>/>${line}_/g" ${line}_final.cds.fa ; cd ../ ; done
+cat ${BlastDB_PG} | while read line ; do sed -i "s/>/>${line}_/g" ${line}_final.cds.fa; done
 cat ${BlastDB_PG} | while read line ; do makeblastdb -in "$line" -dbtype nucl ; done
 
 #### Step 2: add transcriptomes to blastDB
