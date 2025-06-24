@@ -34,10 +34,10 @@ min_blast_aln_length=300
 
 ls ${CDS} > ${wd}/ctrl_files/BlastDBs_PG.txt
 BlastDB_PG=${wd}/ctrl_files/BlastDBs_PG.txt
-cat ${ctrl_files}/list_genomes.txt | while read line ; do cp ${CDS}/${line}/${line}_final.cds.fa ${BlastDB_location} ; done
+cat ${BlastDB_PG} | while read line ; do cp ${CDS}/${line}/${line}_final.cds.fa ${BlastDB_location} ; done
 cd ${BlastDB_location}
 # Add DB_ at the beggining of all CDS to be able to differentiate from the original query
-cat ${ctrl_files}/list_genomes.txt | while read line ; do sed -i "s/>/>DB_/g" ${line}_final.cds.fa ; cd ../ ; done
+cat ${BlastDB_PG} | while read line ; do sed -i "s/>/>${line}_/g" ${line}_final.cds.fa ; cd ../ ; done
 cat ${BlastDB_PG} | while read line ; do makeblastdb -in "$line" -dbtype nucl ; done
 
 #### Step 2: add transcriptomes to blastDB
