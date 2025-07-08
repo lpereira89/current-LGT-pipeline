@@ -93,6 +93,7 @@ source /usr/local/extras/Genomics/.bashrc
 mkdir ../ALN2-unique
 cat ../query.txt | while read line ; do grep ">" ../ALN1-mafft/"$line" | cut -f 2 -d ">" | sort | awk '{count[$1]++} END {for (word in count) print word, count[word]}' | \
     grep "\s1$" | cut -f 1 -d ' '  | while read line2 ; do grep "$line2$" -A 1 ../ALN1-mafft/"$line" >> ../ALN2-unique/"$line" ; done; done
+sed -i "s/^--$//g" *
 
 #### Step 10: identify blastn matches represented by more than one sequence fragment and move these to their own folder
 mkdir ../ALN3-duplicated
